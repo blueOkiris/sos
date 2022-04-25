@@ -1,0 +1,10 @@
+[package]
+name = "sysman"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "sysman"
+path = "src/main.rs"

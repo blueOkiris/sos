@@ -1,0 +1,65 @@
+<pkg id="GIMP" home="/app/gimp" source="true" pkgvers="0">
+    <source>https://gitlab.gnome.org/GNOME/gimp.git</source>
+    <archdeps>
+        lcms2
+        libwmf
+        icu
+        enchant
+        libgexiv2
+        librsvg
+        desktop-file-utils
+        libexif
+        libart-lgpl
+        dbus-glib
+        gtk-doc
+        poppler-glib
+        poppler-data
+        openexr
+        mypaint-brushes1
+        babl
+        gegl
+        cairo
+        appstream-glib
+        gobject-introspection
+        git
+        intltool
+        alsa-lib
+        libxslt
+        glib-networking
+        alsa-lib
+        curl
+        ghostscript
+        libxpm
+        webkit2gtk
+        libheif
+        libwebp
+        libmng
+        iso-codes
+        aalib
+        zlib
+        gjs
+        python-gobject
+        luajit
+    </archdeps>
+    <build>
+        export CFLAGS CXXFLAGS LDFLAGS
+        meson "gimp/gimp" \
+            "gimp/build" \
+            --prefix=/usr \
+            -Dbug-report-url='https://github.com/bartoszek/AUR-gimp-git/issues'
+        export NINJA_STATUS="[%p | %f<%r<%u | %cbps ] "
+        ninja $(grep -oP -- '-+[A-z]+ ?[0-9]*'<<<"${MAKEFLAGS:--j1}") -C "gimp/build"
+    </build>
+    <start>su -c "/app/gimp/gimp/gimp" gimp</start>
+    <icon>/app/gimp/gimp/icon.png</icon>
+</pkg>
+<pkg name="Blender" home="/app/blender" source="false" pkgvers="0">
+    <source>https://mirror.clarkson.edu/blender/release/Blender3.1/blender-3.1.2-linux-x64.tar.xz</source>
+    <archdeps>
+
+    </archdeps>
+    <build>
+
+    </build>
+    <start>/app/blender/blender</start>
+</pkg>
