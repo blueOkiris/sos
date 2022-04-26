@@ -34,4 +34,5 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cp -r sos /mnt/
 
 # Run secondary install script
-arch-chroot /mnt ./install-chroot.sh
+## Second parameter is timezone
+arch-chroot /mnt ./install-chroot.sh ${2} ${3}

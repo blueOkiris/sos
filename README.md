@@ -10,6 +10,7 @@ The project contains:
 - Custom Desktop Environment
 - Custom package manager for user applications
 - A UX-focused distro built on AppImages
+- Status tray tools for Wifi/Ethernet management, Sound management, and Bluetooth management
 
 ## Building
 
