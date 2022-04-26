@@ -21,7 +21,6 @@ Dependencies:
 Build:
 1. Boot into an [Arch install iso](https://archlinux.org/download/)
 2. Connect to internet
-3. Run `ping -c 3 google.com`
 3. Run `pacman -Sy`
 4. Run `pacman -S git glibc` and press enter
 5. Clone this repo: `git clone https://github.com/blueOkiris/sos`
