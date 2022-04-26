@@ -3,4 +3,4 @@ target/
 *.AppImage
 *.zsync
 *.iso
-releng/
+work/
