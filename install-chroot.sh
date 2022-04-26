@@ -134,8 +134,8 @@ pacman --noconfirm -S vim
 
 echo "Setting up desktop environment."
 
-## Install openbox, xfce4-panel, etc (stuff that's not this project)
-pacman --noconfirm -S xorg xorg-xinit xfce4-panel xfce4-terminal openbox lightdm lightdm-webkit2-greeter
+## Install xfwm4, xfce4-panel, etc (stuff that's not this project)
+pacman --noconfirm -S xorg xorg-xinit xfce4-panel xfce4-terminal xfwm4 lightdm lightdm-webkit2-greeter
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
@@ -150,9 +150,9 @@ sed -i 's/antergos/glorious/g' /etc/lightdm/lightdm-webkit2-greeter.conf
 sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
 
-## Set up xfce4-panel and openbox
+## Set up DE
 cat >> /etc/sos-desktop.sh<< EOF
-openbox &
+xfwm4 &
 xfce4-panel &
 xfce4-terminal
 EOF
