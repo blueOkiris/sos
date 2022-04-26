@@ -13,3 +13,8 @@
     <url>some github link when I'm done</url>
     <file>File_Manager-0-x86_64.AppImage</file>
 </pkg>
+<pkg name="App Launcher" pkgvers="0">
+    <user home="/app/launcher">fileman</usr>
+    <url>some github link when I'm done</url>
+    <file>App_Launcher-0-x86_64.AppImage</file>
+</pkg>

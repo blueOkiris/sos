@@ -95,6 +95,19 @@ useradd -m -s /bin/bash -b /app fileman
 cp /sos/fileman/File_Manager-0-x86_64.AppImage /app/fileman
 echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /app
 
+## Install appimage of fileman
+echo "Packaging App Launcher as AppImage."
+cd /sos/launcher
+cp ../fileman/appimagecraft-x86_64.AppImage .
+DEPLOY_GTK_VERSION=4 ./appimagecraft-x86_64.AppImage
+cd ../..
+
+echo "Installing App Launcher."
+mkdir /app
+useradd -m -s /bin/bash -b /app launcher
+cp /sos/launcher/App_Launcher-0-x86_64.AppImage /app/launcher
+echo "App Launcher,0,launcher,/app/launcher,App_Launcher-0-x86_64.AppImage" >> /app
+
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."
 pacman --noconfirm -S zsh

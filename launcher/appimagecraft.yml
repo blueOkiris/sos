@@ -1,0 +1,36 @@
+version: 1
+
+project:
+  name: com.blueokiris.AppLauncher
+  version_command: echo 0
+
+build:
+  script:
+    commands:
+      # unfortunately, no out-of-source builds are possible (yet)
+      - pushd "$PROJECT_ROOT"
+      - mkdir -p $BUILD_DIR/AppDir/usr/bin
+      - cp ../target/release/launcher $BUILD_DIR/AppDir/usr/bin
+      - popd
+
+scripts:
+  post_build:
+    - touch "$BUILD_DIR"/launcher.svg
+    - |2
+      cat > "$BUILD_DIR"/launcher.desktop <<EOF
+      [Desktop Entry]
+      Name=App Launcher
+      Type=Application
+      Terminal=true
+      Categories=Utility;
+      Exec=launcher
+      Icon=launcher
+      EOF
+
+appimage:
+  linuxdeploy:
+    plugins:
+      - gtk
+    environment:
+      UPD_INFO: "zsync|http://foo.bar/baz.zsync"
+    extra_args: -i "$BUILD_DIR"/launcher.svg -d "$BUILD_DIR"/launcher.desktop

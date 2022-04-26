@@ -1,2 +1,2 @@
 [workspace]
-members = [ "sysman", "fileman" ]
+members = [ "sysman", "fileman", "launcher" ]
