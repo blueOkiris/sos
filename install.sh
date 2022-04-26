@@ -29,3 +29,9 @@ mount ${1}1 /mnt/boot
 # Install base system
 pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
+
+# Copy files over
+cp -r sos /mnt/
+
+# Run secondary install script
+arch-chroot /mnt ./install-chroot.sh
