@@ -142,6 +142,7 @@ export PATH="/home/${3}/.local/bin:\$PATH"
 export EDITOR=vim
 EOF
 pacman --noconfirm -S vim
+chown ${3}: /home/${3}/.zshrc
 
 # Desktop setup
 
@@ -153,7 +154,9 @@ pacman --noconfirm -S xorg xorg-xinit xfce4 lightdm lightdm-webkit2-greeter
 ### Seems to be the easiest way
 pacman --noconfirm -R xfce4
 ### Then install the xfce4 stuff we're using
-pacman --noconfirm -S xfce4-panel xfce4-terminal xfwm4 xfce4-datetime-plugin xfce4-pulseaudio-plugin xfce4-fsguard-plugin xfce4-battery-plugin
+pacman --noconfirm -S xfce4-panel xfce4-terminal \
+    xfwm4 xfce4-datetime-plugin xfce4-pulseaudio-plugin xfce4-fsguard-plugin xfce4-battery-plugin \
+    ttf-ubuntu-font-family papirus-icon-theme arc-gtk-theme
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
@@ -186,6 +189,20 @@ Icon=
 Type=Application
 DesktopNames=SimpleOS_DE
 EOF
+
+### Set up DE Configs
+rm -rf /home/${3}/.config/xfce4
+mkdir -p /home/${3}/.config
+cp sos/xfce4-conf.tar.xz /home/${3}/.config
+cp sos/.gtkrc-2.0 /home/${3}/.config
+cd /home/${3}/.config/
+tar xfzv xfce4-conf.tar.xz
+chown -R ${3}: /home/${3}/.config
+rm -rf /app/sysman/.config/xfce4
+mkdir -p /app/sysman/.config
+cp -r /home/${3}/.config/xfce4 /app/sysman/.config
+cp sos/.gtkrc-2.0 /app/sysman/.config
+chown -R sysman: /app/sysman/.config
 
 ## Install network stuff
 echo "Setting up network tools."

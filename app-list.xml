@@ -10,11 +10,11 @@
 </pkg>
 <pkg name="File Manager" pkgvers="0">
     <user home="/app/fileman">fileman</usr>
-    <url>some github link when I'm done</url>
+    <url>https://github.com/blueOkiris/sos/releases/download/fm-0/File_Manager-0-x86_64.AppImage</url>
     <file>File_Manager-0-x86_64.AppImage</file>
 </pkg>
 <pkg name="App Launcher" pkgvers="0">
     <user home="/app/launcher">fileman</usr>
-    <url>some github link when I'm done</url>
+    <url>https://github.com/blueOkiris/sos/releases/download/lr-0/App_Launcher-0-x86_64.AppImage</url>
     <file>App_Launcher-0-x86_64.AppImage</file>
 </pkg>
