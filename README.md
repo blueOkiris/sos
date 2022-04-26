@@ -18,7 +18,7 @@ Dependencies:
 - archiso
 
 1. Copy `/usr/share/archiso/configs/releng` to somewhere (Note: it's a directory)
-2. Clone this repo into the `airootfs/` subfolder
+2. Clone this repo into the `airootfs/root/` subfolder
 3. Run `sudo mkarchiso <path to custom releng folder>`
 
 ## Installing

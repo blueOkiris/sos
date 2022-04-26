@@ -4,3 +4,4 @@ target/
 *.zsync
 *.iso
 work/
+out/
