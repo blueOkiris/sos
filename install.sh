@@ -8,23 +8,23 @@ timedatectl set-ntp true
 ## First paramater is hard drive to install to
 
 ## Create new partition table
-parted -s $1 mktable gpt
+parted -s ${1} mktable gpt
 
 ## Create the EFI partition
-parted -s $1 mkpart primary fat32 0% 512M
+parted -s ${1} mkpart primary fat32 0% 512M
 
 ## Create the root partition
 ## I've chosen no swap. I don't think it's needed on Desktop Linux tbh (uesful on servers tho)
-parted -s $1 mkpart primary ext4 513M 100%
+parted -s ${1} mkpart primary ext4 513M 100%
 
 ## Format
-mkfs.fat -F 32 $(1)1
-mkfs.ext4 $(1)2
+mkfs.fat -F 32 ${1}1
+mkfs.ext4 ${1}2
 
 ## Mount
-mount $(1)2 /mnt
+mount ${1}2 /mnt
 mkdir /mnt/boot
-mount $(1)1 /mnt/boot
+mount ${1}1 /mnt/boot
 
 # Install base system
 pacstrap /mnt base linux linux-firmware
