@@ -2,3 +2,5 @@
 target/
 *.AppImage
 *.zsync
+*.iso
+releng/
