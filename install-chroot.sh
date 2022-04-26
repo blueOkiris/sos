@@ -79,7 +79,7 @@ mkdir /app
 useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
 echo "System Manager,0,sysman,/app/sysman,sysman" > /app
-echo "sysman:${4}" | passwd
+echo "sysman:${4}" | chpasswd
 
 ## Install appimage of fileman
 echo "Packaging File Manager as AppImage."
@@ -153,7 +153,7 @@ pacman --noconfirm -S xorg xorg-xinit xfce4 lightdm lightdm-webkit2-greeter
 ### Seems to be the easiest way
 pacman --noconfirm -R xfce4
 ### Then install the xfce4 stuff we're using
-pacman --noconfirm -S xfce4-panel xfce4-terminal xfwm4
+pacman --noconfirm -S xfce4-panel xfce4-terminal xfwm4 xfce4-datetime-plugin xfce4-pulseaudio-plugin xfce4-fsguard-plugin xfce4-battery-plugin
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
