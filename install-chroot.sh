@@ -33,7 +33,7 @@ echo "sossi-boi" > /etc/hostname
 
 # Set root password
 ## 2nd param
-echo ${2} | passwd --stdin root
+echo "root:${2}:" | chpasswd
 
 # Install bootloader
 
@@ -79,7 +79,7 @@ mkdir /app
 useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
 echo "System Manager,0,sysman,/app/sysman,sysman" > /app
-echo ${4} | passwd --stdin sysman
+echo "sysman:${4}" | passwd
 
 ## Install appimage of fileman
 echo "Packaging File Manager as AppImage."
@@ -99,7 +99,7 @@ echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /ap
 echo "Creating user ${3}."
 pacman --noconfirm -S zsh
 useradd -m -s /bin/zsh -b /home ${3}
-echo ${4} | passwd --stdin ${3}
+echo "${3}:${4}" | chpasswd
 
 ## Set up oh-my-zsh
 echo "Setting up zsh."
@@ -135,7 +135,7 @@ pacman --noconfirm -S vim
 echo "Setting up desktop environment."
 
 ## Install openbox, xfce4-panel, etc (stuff that's not this project)
-pacman --noconfirm -S xorg xorg-xinit xfce4-panel openbox lightdm lightdm-webkit2-greeter
+pacman --noconfirm -S xorg xorg-xinit xfce4-panel xfce4-terminal openbox lightdm lightdm-webkit2-greeter
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
@@ -153,7 +153,8 @@ systemctl enable lightdm.service
 ## Set up xfce4-panel and openbox
 cat >> /etc/sos-desktop.sh<< EOF
 openbox &
-xfce4-panel --disable-wm-check
+xfce4-panel &
+xfce4-terminal
 EOF
 cat >> /usr/share/xsessions/sos.desktop<< EOF
 [Desktop Entry]
