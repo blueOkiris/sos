@@ -132,6 +132,13 @@ cat >> /etc/sos-desktop.sh<< EOF
 openbox &
 xfce4-panel --disable-wm-check
 EOF
+cat >> /usr/share/xsessions/sos.desktop<< EOF
+[Desktop Entry]
+Name=Simple OS DE
+Comment=The desktop environment for Simple OS
+Exec=/etc/sos-desktop.sh
+Type=Application
+EOF
 
 ## Install network stuff
 echo "Setting up network tools."
