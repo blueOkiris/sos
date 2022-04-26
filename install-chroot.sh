@@ -135,7 +135,12 @@ pacman --noconfirm -S vim
 echo "Setting up desktop environment."
 
 ## Install xfwm4, xfce4-panel, etc (stuff that's not this project)
-pacman --noconfirm -S xorg xorg-xinit xfce4-panel xfce4-terminal xfwm4 lightdm lightdm-webkit2-greeter
+pacman --noconfirm -S xorg xorg-xinit xfce4 lightdm lightdm-webkit2-greeter
+### Install and uninstall xfce4 so all the config for a DE gets set up.
+### Seems to be the easiest way
+pacman --noconfirm -R xfce4
+### Then install the xfce4 stuff we're using
+pacman --noconfirm -S xfce4-panel xfce4-terminal xfwm4
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
@@ -152,20 +157,21 @@ systemctl enable lightdm.service
 
 ## Set up DE
 cat >> /etc/sos-desktop.sh<< EOF
+#!/bin/bash
 xfwm4 &
-xfce4-panel &
-xfce4-terminal
+xfce4-panel
 EOF
+chmod +x /etc/sos-desktop.sh
+mkdir -p /usr/share/xsessions
 cat >> /usr/share/xsessions/sos.desktop<< EOF
 [Desktop Entry]
-Name=Simple OS DE
-Comment=The desktop environment for Simple OS
+Version=0.0
+Name=Simple OS Session
+Comment=Use this to start the Simple OS Desktop
 Exec=/etc/sos-desktop.sh
-TryExec=/etc/sos-desktop.sh
+Icon=
 Type=Application
-X-LightDM-DesktopName=sos
-DesktopNames=sos
-Keywords=wm;windowmanager;window;manager
+DesktopNames=SimpleOS_DE
 EOF
 
 ## Install network stuff
