@@ -89,7 +89,7 @@ su -c "git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-
 
 ## Set default zshrc to something simple, but nice
 rm -rf /home/${3}/.zshrc
-cat >> /home/${3}/.zshrc <<< EOF
+cat >> /home/${3}/.zshrc<< EOF
 export ZSH="/home/${3}/.oh-my-zsh"
 ZSH_THEME="gentoo"
 
