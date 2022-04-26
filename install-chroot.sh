@@ -39,23 +39,15 @@ echo ${2} | passwd --stdin root
 
 echo "Installing bootloader."
 bootctl install
+systemctl enable systemd-boot-update
 
-# Build rust project
-
-echo "Building sos project."
-
-## Install system dependencies for our project
-echo "Installing dependencies for Rust code."
-pacman -S gtk4 pkg-config --noconfirm
-
-## Install cargo
-pacman --noconfirm -S cargo
-
-## Build rust project
-echo "Build start."
-cd /sos
-cargo build --release
-cd ..
+echo "Adding boot entry."
+cat > /boot/loader/entries/arch.conf<< EOF
+title   Simple OS
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options root="/dev/sda" rw
+EOF
 
 # Set up users and rust apps
 
@@ -64,6 +56,23 @@ cd ..
 pacman --noconfirm -S sudo
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /etc/sudoers
 
+## Build rust project
+
+echo "Building sos project."
+
+### Install system dependencies for our project
+echo "Installing dependencies for Rust code."
+pacman -S gtk4 pkg-config --noconfirm
+
+### Install cargo
+pacman --noconfirm -S cargo
+
+### Build rust project
+echo "Build start."
+cd /sos
+cargo build --release
+cd ..
+
 ## Install sysman
 echo "Installing System Manager."
 mkdir /app
@@ -71,6 +80,10 @@ useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
 echo "System Manager,0,sysman,/app/sysman,sysman" > /app
 echo ${4} | passwd --stdin sysman
+
+## Install appimage of fileman
+echo "Packaging fileman as AppImage."
+# TODO
 
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."
