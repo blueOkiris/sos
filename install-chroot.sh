@@ -3,6 +3,8 @@
 
 # Update
 
+echo "Updating."
+
 ## Update mirrolist
 pacman -Sy
 pacman -S pacman-contrib
@@ -13,12 +15,14 @@ pacman -Syu
 
 # Set timezone and locale
 
+echo "Setting up locale."
+
 ## Set time zone (parameter 1)
 ln -sf /usr/share/zoneinfo/${1} /etc/localtime
 hwclock --systohc
 
 ## Localization setup
-echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 
@@ -30,6 +34,8 @@ echo "sossi-boi" > /etc/hostname
 echo ${2} | passwd --stdin root
 
 # Build rust project
+
+echo "Building sos project."
 
 ## Install cargo
 pacman -S cargo

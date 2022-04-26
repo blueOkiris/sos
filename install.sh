@@ -7,6 +7,8 @@ timedatectl set-ntp true
 # Set up disks
 ## First paramater is hard drive to install to
 
+echo "Setting up partitions on ${1}"
+
 ## Create new partition table
 parted -s ${1} mktable gpt
 
@@ -27,6 +29,8 @@ mkdir /mnt/boot
 mount ${1}1 /mnt/boot
 
 # Install base system
+
+echo "Installing base system to ${1}"
 pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
