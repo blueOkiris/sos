@@ -70,7 +70,7 @@ mkdir /app
 useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
 echo "System Manager,0,sysman,/app/sysman,sysman" > /app
-echo ${2} | passwd --stdin sysman
+echo ${4} | passwd --stdin sysman
 
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."
@@ -112,21 +112,19 @@ pacman --noconfirm -S vim
 echo "Setting up desktop environment."
 
 ## Install openbox, xfce4-panel, etc (stuff that's not this project)
-pacman --noconfirm -S \
-    xorg xorg-xinit xfce4-panel openbox \
-    lightdm lightdm-webkit2-greeter
+pacman --noconfirm -S xorg xorg-xinit xfce4-panel openbox lightdm lightdm-webkit2-greeter
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
 chown sysman: .
 su -c "makepkg -Acs" sysman
-pacman -U *.pkg.tar.zst
+pacman --noconfirm -U *.pkg.tar.zst
 cd ../..
 
 ## Set up lightdm
 echo "Setting up display manager."
-sed -i 's/antergos/glorious/g' /etc/lightdm/lightdmt-webkit2-greeter.conf
-sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm.conf
+sed -i 's/antergos/glorious/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
 
 ## Set up xfce4-panel and openbox
@@ -137,7 +135,7 @@ EOF
 
 ## Install network stuff
 echo "Setting up network tools."
-pacman --noconfirm -S networkmanager nm-applet
+pacman --noconfirm -S networkmanager network-manager-applet
 systemctl enable networkmanager.service
 
 rm -rf sos
