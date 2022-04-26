@@ -42,4 +42,4 @@ cp -r sos /mnt/
 ## Second parameter is timezone
 arch-chroot /mnt ./sos/install-chroot.sh ${2} ${3} ${4} ${5}
 
-#reboot
+reboot

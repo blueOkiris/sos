@@ -42,11 +42,11 @@ bootctl install
 systemctl enable systemd-boot-update
 
 echo "Adding boot entry."
-cat > /boot/loader/entries/arch.conf<< EOF
+cat >> /boot/loader/entries/arch.conf<< EOF
 title   Simple OS
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root="/dev/sda" rw
+options root="/dev/sda2" rw
 EOF
 
 # Set up users and rust apps
