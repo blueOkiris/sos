@@ -10,6 +10,7 @@ The project contains:
 - Custom package manager for enforcing user applications
 - Install scripts for building off of Arch
 - File browser (bc therer aren't any flatpak file browsers out there)
+- Application launcher
 
 ## Building Custom Iso
 
