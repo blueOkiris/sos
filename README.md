@@ -26,7 +26,8 @@ Dependencies:
 To install:
 1. Boot up the Simple OS iso (you can get it from releases or build it yourself)
 2. Connect to the internet [like you would with an Arch Iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
-3. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
+3. Run `chmod +x ./sos/install.sh`
+4. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
 
 ## Installing Apps/Drivers Not in Official List
 
