@@ -6,11 +6,13 @@
 echo "Updating."
 
 ## Update mirrolist
-pacman -Sy
-pacman -S pacman-contrib
-curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
+#echo "Configuring mirrorlist. This may take a while :/"
+#pacman -Sy
+#pacman -S pacman-contrib
+#curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 
 ## Update
+#echo "Okay. Actually updating now!"
 pacman -Syu
 
 # Set timezone and locale
