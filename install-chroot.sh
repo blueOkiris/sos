@@ -120,7 +120,7 @@ git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
 chown sysman: .
 su -c "makepkg -Acs" sysman
-pacman -U *.tar.gz
+pacman -U *.pkg.tar.zst
 cd ../..
 
 ## Set up lightdm
