@@ -12,14 +12,9 @@ When it comes to packages, the purpose of the application is four-fold:
         + Name and home dir
     - Look for url to package data from github repo
     - Manage dependencies via pacman
+    - Use predominantly appimages
 2. Install tray items (single binaries that install to /trayitems)
-3. Manage an interface to underlying pacman for libraries, services, and drivers
-    - Keep track of all application using a specific arch package and uninstall if not used
-    - Note that that doesn't apply to packages that are preinstalled. Basically, do "if !preinstalled && !depended_on { uninstall() }"
-4. Install and update drivers, libraries, and services
-    - List of "approved" Arch driver packages in /etc/valid-arch/drivers
-    - List of "approved" Arch service packages in /etc/valid-arch/services
-    - Libraries only installed as dependencies
+3. Install and update system-level items
 
 __Services:__
 
