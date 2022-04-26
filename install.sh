@@ -35,4 +35,4 @@ cp -r sos /mnt/
 
 # Run secondary install script
 ## Second parameter is timezone
-arch-chroot /mnt ./install-chroot.sh ${2} ${3}
+arch-chroot /mnt ./sos/install-chroot.sh ${2} ${3}
