@@ -83,9 +83,10 @@ echo "Setting up zsh."
 pacman --noconfirm -S git curl
 cd /home/${3}
 su -c "curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh" ${3}
-su -c "git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions"
-su -c "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-su -c "git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+su -c "git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions" ${3}
+su -c "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ${3}
+su -c "git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ${3}
+cd ..
 
 ## Set default zshrc to something simple, but nice
 rm -rf /home/${3}/.zshrc
@@ -93,15 +94,15 @@ cat >> /home/${3}/.zshrc<< EOF
 export ZSH="/home/${3}/.oh-my-zsh"
 ZSH_THEME="gentoo"
 
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto # update automatically without asking
 
 plugins=(git zsh-completions zsh-syntax-highlighting zsh-autosuggestions)
 autoload -U compinit && compinit
 
-source $ZSH/oh-my-zsh.sh
+source \$ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH="/home/${3}/.local/bin:$PATH"
+export PATH="/home/${3}/.local/bin:\$PATH"
 export EDITOR=vim
 EOF
 pacman --noconfirm -S vim
