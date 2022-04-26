@@ -114,7 +114,14 @@ echo "Setting up desktop environment."
 ## Install openbox, xfce4-panel, etc (stuff that's not this project)
 pacman --noconfirm -S \
     xorg xorg-xinit xfce4-panel openbox \
-    lightdm lightdm-webkit2-greeter lightdm-webkit2-theme-glorious
+    lightdm lightdm-webkit2-greeter
+cd sos
+git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
+cd lightdm-webkit2-theme-glorious
+chown sysman: .
+su -c "makepkg -Acs" sysman
+pacman -U *.tar.gz
+cd ../..
 
 ## Set up lightdm
 echo "Setting up display manager."
@@ -132,3 +139,5 @@ EOF
 echo "Setting up network tools."
 pacman --noconfirm -S networkmanager nm-applet
 systemctl enable networkmanager.service
+
+rm -rf sos

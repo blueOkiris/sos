@@ -32,7 +32,7 @@ mount ${1}1 /mnt/boot
 # Install base system
 
 echo "Installing base system to ${1}."
-pacstrap /mnt base linux linux-firmware
+pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Copy files over
