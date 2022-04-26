@@ -57,7 +57,7 @@ cd /sos
 cargo build --release
 cd ..
 
-# Set up users and sysman
+# Set up users and rust apps
 
 ## Install and set up sudo
 
@@ -143,6 +143,6 @@ EOF
 ## Install network stuff
 echo "Setting up network tools."
 pacman --noconfirm -S networkmanager network-manager-applet
-systemctl enable networkmanager.service
+systemctl enable NetworkManager.service
 
 rm -rf sos

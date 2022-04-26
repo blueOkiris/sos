@@ -8,3 +8,8 @@
     <url>https://github.com/srevinsaju/Firefox-Appimage/releases/download/firefox-nightly/firefox-nightly-101.0.r20220425213655-x86_64.AppImage</url>
     <file>firefox-nightly-101.0.r20220425213655-x86_64.AppImage</file>
 </pkg>
+<pkg name="File Manager" pkgvers="0">
+    <user home="/app/fileman">fileman</usr>
+    <url>some github link when I'm done</url>
+    <file>fileman.AppImage</file>
+</pkg>

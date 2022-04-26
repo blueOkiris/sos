@@ -9,6 +9,7 @@ The project contains:
 - User applications forced into a specific setup contained in their own user using AppImages
 - Custom package manager for enforcing user applications
 - Install scripts for building off of Arch
+- File browser (bc therer aren't any flatpak file browsers out there)
 
 ## Building
 
