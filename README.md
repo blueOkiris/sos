@@ -24,7 +24,7 @@ Build:
 3. Run `pacman -Sy`
 4. Run `pacman -S git glibc` and press enter
 5. Clone this repo: `git clone https://github.com/blueOkiris/sos`
-6. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <root password>` i.e. `./sos/install.sh /dev/sda US/Central password`, and select "yes" anytime you're stopped
+6. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` i.e. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`, and just press enter anytime you're stopped
 
 ## Installing Apps/Drivers Not in Official List
 
