@@ -106,3 +106,29 @@ export PATH="/home/${3}/.local/bin:\$PATH"
 export EDITOR=vim
 EOF
 pacman --noconfirm -S vim
+
+# Desktop setup
+
+echo "Setting up desktop environment."
+
+## Install openbox, xfce4-panel, etc (stuff that's not this project)
+pacman --noconfirm -S \
+    xorg xorg-xinit xfce4-panel openbox \
+    lightdm lightdm-webkit2-greeter lightdm-webkit2-theme-glorious
+
+## Set up lightdm
+echo "Setting up display manager."
+sed -i 's/antergos/glorious/g' /etc/lightdm/lightdmt-webkit2-greeter.conf
+sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm.conf
+systemctl enable lightdm.service
+
+## Set up xfce4-panel and openbox
+cat >> /etc/sos-desktop.sh<< EOF
+openbox &
+xfce4-panel --disable-wm-check
+EOF
+
+## Install network stuff
+echo "Setting up network tools."
+pacman --noconfirm -S networkmanager nm-applet
+systemctl enable networkmanager.service

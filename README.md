@@ -6,11 +6,9 @@ A Linux distro that's heavily modified to improve user experience.
 
 The project contains:
 - Protection of system-level changes and management through a single "System Manager" application
-- User applications forced into a specific setup contained in their own user
-- Custom Desktop Environment
-- Custom package manager for user applications
-- A UX-focused distro built on AppImages
-- Status tray tools for Wifi/Ethernet management, Sound management, and Bluetooth management
+- User applications forced into a specific setup contained in their own user using AppImages
+- Custom package manager for enforcing user applications
+- Install scripts for building off of Arch
 
 ## Building
 
