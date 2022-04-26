@@ -11,5 +11,5 @@
 <pkg name="File Manager" pkgvers="0">
     <user home="/app/fileman">fileman</usr>
     <url>some github link when I'm done</url>
-    <file>fileman.AppImage</file>
+    <file>File_Manager-0-x86_64.AppImage</file>
 </pkg>

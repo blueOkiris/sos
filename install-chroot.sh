@@ -82,8 +82,18 @@ echo "System Manager,0,sysman,/app/sysman,sysman" > /app
 echo ${4} | passwd --stdin sysman
 
 ## Install appimage of fileman
-echo "Packaging fileman as AppImage."
-# TODO
+echo "Packaging File Manager as AppImage."
+cd /sos/fileman
+wget https://github.com/TheAssassin/appimagecraft/releases/download/continuous/appimagecraft-x86_64.AppImage
+chmod +x appimagecraft-x86_64.AppImage
+DEPLOY_GTK_VERSION=4 ./appimagecraft-x86_64.AppImage
+cd ../..
+
+echo "Installing File Manager."
+mkdir /app
+useradd -m -s /bin/bash -b /app fileman
+cp /sos/fileman/File_Manager-0-x86_64.AppImage /app/fileman
+echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /app
 
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."

@@ -6,7 +6,7 @@
 use gtk4::{
     Application, ApplicationWindow,
     prelude::{
-        WidgetExt, ApplicationExt
+        WidgetExt, ApplicationExt, ApplicationExtManual
     }
 };
 
@@ -28,4 +28,7 @@ fn main() {
             .build();
         win.show();
     });
+
+    app.run();
+    app.quit();
 }
