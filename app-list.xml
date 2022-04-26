@@ -1,0 +1,5 @@
+<pkg name="GIMP" pkgvers="0">
+    <user home="/app/gimp">gimp</user>
+    <url>https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.25-20210610-x86_64.AppImage</url>
+    <file>GIMP_AppImage-git-2.10.25-20210610-x86_64.AppImage</file>
+</pkg>

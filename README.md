@@ -4,48 +4,47 @@
 
 A Linux distro that's heavily modified to improve user experience.
 
-Part of the project contains:
-- A set of desktop utilities
-- Custom package manager
-- Non-standard file system to simplify experience
+The project contains:
+- Protection of system-level changes and management through a single "System Manager" application
+- User applications forced into a specific setup contained in their own user
+- Custom Desktop Environment
+- Custom package manager for user applications
+- A UX-focused distro built on AppImages
+- Status tray tools for Wifi/Ethernet management, Sound management, and Bluetooth management
 
 ## Building
 
-1. Install dependencies:
-- 64-bit Linux Dev machine (Arch recommended as it's the easiest to get software for)
-- Bash >= 3.2
-- Binutils >= 2.13.1
-- Bison >= 2.7
-- Coreutiles >= 6.9
-- Diffutils >= 2.8.1
-- Findutils >= 4.2.31
-- Gawk >= 4.0.1
-- Gcc >= 4.8 (with c++)
-- Grep >= 2.5.1a
-- Gzip >= 1.3.12
-- Linux Kernel >= 3.2
-- M4 >= 1.4.10
-- Make >= 4.0
-- Patch >= 2.5.4
-- Perl >= 5.8.8
-- Python >= 3.4
-- Sed >= 4.1.5
-- Tar >= 1.22
-- Texinfo >= 4.7
-- Xz >= 5.0.0
+Dependencies:
+- Arch Linux base install
+- cargo installed on said base system
 
-2. Create a partition around 20-30GB. I recommend using an SD Card. Mine auto-mounts to `/run/media/$USER/SimpleOS/`, so that's what I'll use. If yours is different, replace it in the commands below. You can also just install directly to a hard drive
+Build:
+1. Boot into an [Arch install iso](https://archlinux.org/download/)
+2. Connect to internet
+3. Run `ping -c 3 google.com`
+3. Run `pacman -Sy`
+4. Run `pacman -S git glibc` and press enter
+5. Clone this repo: `git clone https://github.com/blueOkiris/sos`
+6. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <root password>` i.e. `./sos/install.sh /dev/sda US/Central password`, and select "yes" anytime you're stopped
 
-3. Mount the partition
+## Installing Apps/Drivers Not in Official List
 
-4. Create a /run/media/\$USER/SimpleOS/sources folder as root with special permissions:
-- `sudo mkdir /run/media/$USER/SimpleOS/sources`
-- `sudo chmod a+wt /run/media/$USER/SimpleOS/sources`
+__Proper Path:__
 
-5. As root, create folders /run/media/\$USER/SimpleOS/usr, /run/media/\$USER/SimpleOS/usr/bin, /run/media/\$USER/SimpleOS/usr/sbin, /run/media/\$USER/SimpleOS/usr/lib, /run/media/\$USER/SimpleOS/usr/lib64, /run/media/\$USER/SimpleOS/etc, /run/media/\$USER/SimpleOS/var, and /run/media/\$USER/SimpleOS/tools
-- `sudo mkdir -p /run/media/$USER/SimpleOS/{usr{,/bin,/sbin,/lib,/lib64},etc,var,sources,tools}`
+In this OS you're not *supposed* to use the root account, though of course, you can. Ideally though, you should install apps through sysman, not pacman
 
-6. Allow your user to make changes
-- `sudo chown $USER /run/media/$USER/SimpleOS/{usr{,/*},etc,var,sources,tools}`
+So what if the app or driver you want doesn't exist? Then you should contribute to the project! Fork, make changes, and submit a pull request and make it better for everyone. It's super simple in this case
 
-7. Run `make PART=/run/media/$USER/SimpleOS`
+For apps, find an AppImage for what you want and add an entry to app-list.xml alla the ones that are already there. For drivers, add a new line with the Arch package you want supported.
+
+I (Blue Okiris) will check you did it right, and then add it in, and then you should be able install your new package.
+
+__Workaround:__
+
+In the event I don't approve of your app or take too long, you can manually install an app.
+
+Note that I do not recommend going down this path.
+
+For drivers, log into the root acount, and install the package with pacman like you would with Arch Linux.
+
+For apps, first create a user with the name of the app you want: `useradd -m /app/<appname> <appname>`, download the AppImage you want and place it in that directory, and then add an entry to `/etc/app/.list` with the format `<package name>,<package vers>,<appname>,/app/<appname>,<file name of downloaded AppImage`, e.g. `GIMP,0,gimp,/app/gimp,GIMP_AppImage-git-2.10.25-20210610-x86_64.AppImage`
