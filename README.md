@@ -19,7 +19,7 @@ Dependencies:
 - cargo installed on said base system
 
 Build:
-1. Launch arch iso
+1. Boot into an [Arch install iso](https://archlinux.org/download/)
 2. Connect to internet
 3. Run `sudo pacman -Sy`
 4. Run `sudo pacman -S git glibc`
