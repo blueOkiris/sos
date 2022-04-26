@@ -11,19 +11,22 @@ The project contains:
 - Install scripts for building off of Arch
 - File browser (bc therer aren't any flatpak file browsers out there)
 
-## Building
+## Building Custom Iso
 
 Dependencies:
-- Arch Linux base install
-- cargo installed on said base system
+- Arch Linux
+- archiso
 
-Build:
-1. Boot into an [Arch install iso](https://archlinux.org/download/)
-2. Connect to internet
-3. Run `pacman -Sy`
-4. Run `pacman -S git glibc` and press enter
-5. Clone this repo: `git clone https://github.com/blueOkiris/sos`
-6. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
+1. Copy `/usr/share/archiso/configs/releng` to somewhere (Note: it's a directory)
+2. Clone this repo into the `airootfs/` subfolder
+3. Run `sudo mkarchiso <path to custom releng folder>`
+
+## Installing
+
+To install:
+1. Boot up the Simple OS iso (you can get it from releases or build it yourself)
+2. Connect to the internet [like you would with an Arch Iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
+3. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
 
 ## Installing Apps/Drivers Not in Official List
 
