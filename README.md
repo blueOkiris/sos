@@ -19,10 +19,9 @@ Dependencies:
 - cargo installed on said base system
 
 Build:
-1. Launch archiso
-2. Connect to internet via `wifi-menu`
+1. Launch arch iso
+2. Connect to internet
 3. Run `sudo pacman -Sy`
 4. Run `sudo pacman -S git glibc`
 5. Clone this repo: `git clone https://github.com/blueOkiris/sos`
-6. Run `chmod +x sos/install.sh`
-7. Run `./sos/install.sh <hard drive you want to install to>`
+6. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <root password>` i.e. `./sos/install.sh /dev/sda US/Central password`

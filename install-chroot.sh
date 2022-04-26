@@ -14,7 +14,7 @@ pacman -Syu
 # Set timezone and locale
 
 ## Set time zone (parameter 1)
-ln -sf /etc/share/zoneinfo/${1} /etc/localtime
+ln -sf /usr/share/zoneinfo/${1} /etc/localtime
 hwclock --systohc
 
 ## Localization setup
