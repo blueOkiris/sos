@@ -161,7 +161,11 @@ cat >> /usr/share/xsessions/sos.desktop<< EOF
 Name=Simple OS DE
 Comment=The desktop environment for Simple OS
 Exec=/etc/sos-desktop.sh
+TryExec=/etc/sos-desktop.sh
 Type=Application
+X-LightDM-DesktopName=sos
+DesktopNames=sos
+Keywords=wm;windowmanager;window;manager
 EOF
 
 ## Install network stuff
