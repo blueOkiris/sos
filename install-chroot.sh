@@ -78,7 +78,7 @@ echo "Installing System Manager."
 mkdir /app
 useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
-echo "System Manager,0,sysman,/app/sysman,sysman" > /app
+echo "System Manager,0,sysman,/app/sysman,sysman" > /app/index
 echo "sysman:${4}" | chpasswd
 
 ## Install appimage of fileman
@@ -93,7 +93,7 @@ echo "Installing File Manager."
 mkdir /app
 useradd -m -s /bin/bash -b /app fileman
 cp /sos/fileman/File_Manager-0-x86_64.AppImage /app/fileman
-echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /app
+echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /app/index
 
 ## Install appimage of fileman
 echo "Packaging App Launcher as AppImage."
@@ -106,7 +106,7 @@ echo "Installing App Launcher."
 mkdir /app
 useradd -m -s /bin/bash -b /app launcher
 cp /sos/launcher/App_Launcher-0-x86_64.AppImage /app/launcher
-echo "App Launcher,0,launcher,/app/launcher,App_Launcher-0-x86_64.AppImage" >> /app
+echo "App Launcher,0,launcher,/app/launcher,App_Launcher-0-x86_64.AppImage" >> /app/index
 
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."
