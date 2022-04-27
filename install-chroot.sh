@@ -62,7 +62,7 @@ echo "Building sos project."
 
 ### Install system dependencies for our project
 echo "Installing dependencies for Rust code."
-pacman -S gtk4 pkg-config --noconfirm
+pacman --noconfirm -S gtk4 pkg-config fuse ibus
 
 ### Install cargo
 pacman --noconfirm -S cargo
@@ -78,6 +78,7 @@ echo "Installing System Manager."
 mkdir /app
 useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
+chown sysman: /app/sysman/sysman
 echo "System Manager,0,sysman,/app/sysman,sysman" > /app/index
 echo "sysman:${4}" | chpasswd
 
@@ -93,7 +94,10 @@ echo "Installing File Manager."
 mkdir /app
 useradd -m -s /bin/bash -b /app fileman
 cp /sos/fileman/File_Manager-0-x86_64.AppImage /app/fileman
+chmod +x /app/launcher/File_Manager-0-x86_64.AppImage
+chown fileman: /app/launcher/File_Manager-0-x86_64.AppImage
 echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /app/index
+echo "fileman:appuser" | chpasswd
 
 ## Install appimage of fileman
 echo "Packaging App Launcher as AppImage."
@@ -106,7 +110,10 @@ echo "Installing App Launcher."
 mkdir /app
 useradd -m -s /bin/bash -b /app launcher
 cp /sos/launcher/App_Launcher-0-x86_64.AppImage /app/launcher
+chmod +x /app/launcher/App_Launcher-0-x86_64.AppImage
+chown launcher: /app/launcher/App_Launcher-0-x86_64.AppImage
 echo "App Launcher,0,launcher,/app/launcher,App_Launcher-0-x86_64.AppImage" >> /app/index
+echo "launcher:appuser" | chpasswd
 
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."
@@ -174,8 +181,10 @@ systemctl enable lightdm.service
 ## Set up DE
 cat >> /etc/sos-desktop.sh<< EOF
 #!/bin/bash
+/usr/lib/xfce4/notifyd/xfce4-notifyd &
 xfwm4 &
-xfce4-panel
+xfce4-panel &
+nm-applet
 EOF
 chmod +x /etc/sos-desktop.sh
 mkdir -p /usr/share/xsessions
@@ -209,5 +218,27 @@ chown -R sysman: /app/sysman/.config
 echo "Setting up network tools."
 pacman --noconfirm -S networkmanager network-manager-applet
 systemctl enable NetworkManager.service
+
+## Enable ssh for running programs
+echo "Setting up interapp ssh."
+pacman --noconfirm -S sshpass
+systemctl enable sshd.service
+
+## Installing an application runner
+cat >> /usr/bin/run-app.sh<< EOF
+#!/bin/bash
+
+# $1 - app user
+# $2 - app executable
+# $3 - password
+
+chmod 705 /home/$USER
+chmod 605 /home/$USER/.Xauthority
+sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost cp /home/$USER/.Xauthority /app/${1}/
+sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost DISPLAY=:0.0 /app/${1}/${2}
+chmod 700 /home/$USER
+chmod 600 /home/$USER/.Xauthority
+EOF
+chmod +x /usr/bin/run-app.sh
 
 rm -rf /sos

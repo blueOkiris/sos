@@ -24,11 +24,24 @@ Dependencies:
 
 ## Installing
 
+__Getting the Installer:__
+
+You can grab an iso from Releases or make it yourself (above).
+
+Here you can learn how to burn and boot a live iso
+
+__Selecting a Drive:__
+
+After you boot into the live iso, you'll need to select the disk you want to install to. Most likely if you have hard drives, it will be /dev/sda. If you have an nvme ssd then it will be /dev/nvme0n1. If installing to an SD Card it will probably be under /dev/mmcblk0.
+
+To see what disks you have run the command `lsblk`
+
+__Running the Installer__
+
 To install:
-1. Boot up the Simple OS iso (you can get it from releases or build it yourself)
-2. Connect to the internet [like you would with an Arch Iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
-3. Run `chmod +x ./sos/install.sh`
-4. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
+1. Connect to the internet [like you would with an Arch Iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
+2. Run `chmod +x ./sos/install.sh`
+3. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
 
 ## Installing Apps/Drivers Not in Official List
 
