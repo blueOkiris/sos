@@ -203,15 +203,19 @@ EOF
 rm -rf /home/${3}/.config/xfce4
 mkdir -p /home/${3}/.config
 cp sos/xfce4.tar.xz /home/${3}/.config
-cp sos/.gtkrc-2.0 /home/${3}/.config
 cd /home/${3}/.config/
 tar xfzv xfce4.tar.xz
+cp sos/.gtkrc-2.0 /home/${3}
+mkdir -p /home/${3}/.config/gtk-3.0
+cp sos/.gtkrc-2.0 /home/${3}/.config/gtk-3.0/settings.ini
 chown -R ${3}: /home/${3}/.config
 cd ../../..
 rm -rf /app/sysman/.config/xfce4
 mkdir -p /app/sysman/.config
 cp -r /home/${3}/.config/xfce4 /app/sysman/.config
-cp sos/.gtkrc-2.0 /app/sysman/.config
+cp sos/.gtkrc-2.0 /app/sysman/
+mkdir -p /app/sysman/.config/gtk-3.0
+cp sos/.gtkrc-2.0 /app/sysman/.config/gtk-3.0/settings.ini
 chown -R sysman: /app/sysman/.config
 
 ## Install network stuff
@@ -232,13 +236,14 @@ cat >> /usr/bin/run-app.sh<< EOF
 # $2 - app executable
 # $3 - password
 
-chmod 705 /home/$USER
-chmod 605 /home/$USER/.Xauthority
+chmod 705 /home/\$USER
+chmod 605 /home/\$USER/.Xauthority
 sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost cp /home/$USER/.Xauthority /app/${1}/
 sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost DISPLAY=:0.0 /app/${1}/${2}
-chmod 700 /home/$USER
-chmod 600 /home/$USER/.Xauthority
+chmod 700 /home/\$USER
+chmod 600 /home/\$USER/.Xauthority
 EOF
 chmod +x /usr/bin/run-app.sh
+chown ${3}: /usr/bin/run-app.sh
 
 rm -rf /sos
