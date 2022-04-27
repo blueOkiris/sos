@@ -233,14 +233,14 @@ systemctl enable sshd.service
 cat >> /usr/bin/run-app.sh<< EOF
 #!/bin/bash
 
-# $1 - app user
-# $2 - app executable
-# $3 - password
+# \$1 - app user
+# \$2 - app executable
+# \$3 - password
 
 chmod 705 /home/\$USER
 chmod 605 /home/\$USER/.Xauthority
-sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost cp /home/\$USER/.Xauthority /app/${1}/
-sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost DISPLAY=:0.0 /app/${1}/${2}
+sshpass -p \${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \${1}@localhost cp /home/\$USER/.Xauthority /app/\${1}/
+sshpass -p \${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \${1}@localhost DISPLAY=:0.0 /app/\${1}/\${2}
 chmod 700 /home/\$USER
 chmod 600 /home/\$USER/.Xauthority
 EOF
