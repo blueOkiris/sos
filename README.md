@@ -12,21 +12,11 @@ The project contains:
 - File browser (bc therer aren't any flatpak file browsers out there)
 - Application launcher
 
-## Building Custom Iso
-
-Dependencies:
-- Arch Linux
-- archiso
-
-1. Copy `/usr/share/archiso/configs/releng` to somewhere (Note: it's a directory)
-2. Clone this repo into the `airootfs/root/` subfolder
-3. Run `sudo mkarchiso <path to custom releng folder>`
-
 ## Installing
 
 __Getting the Installer:__
 
-You can grab an iso from Releases or make it yourself (above).
+You can grab an iso from Releases or make it yourself (below).
 
 Here you can learn how to burn and boot a live iso
 
@@ -42,6 +32,16 @@ To install:
 1. Connect to the internet [like you would with an Arch Iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
 2. Run `chmod +x ./sos/install.sh`
 3. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
+
+## Building Custom Iso
+
+Dependencies:
+- Arch Linux
+- archiso
+
+1. Copy `/usr/share/archiso/configs/releng` to somewhere (Note: it's a directory)
+2. Clone this repo into the `airootfs/root/` subfolder
+3. Run `sudo mkarchiso <path to custom releng folder>`
 
 ## Installing Apps/Drivers Not in Official List
 
