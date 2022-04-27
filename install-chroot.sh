@@ -71,11 +71,11 @@ pacman --noconfirm -S cargo
 echo "Build start."
 cd /sos
 cargo build --release
-cd ..
+cd /
 
 ## Install sysman
 echo "Installing System Manager."
-mkdir /app
+mkdir -p /app
 useradd -m -G wheel -s /bin/bash -b /app sysman
 cp /sos/target/release/sysman /app/sysman
 chown sysman: /app/sysman/sysman
@@ -85,13 +85,14 @@ echo "sysman:${4}" | chpasswd
 ## Install appimage of fileman
 echo "Packaging File Manager as AppImage."
 cd /sos/fileman
+pacman --noconfirm -S wget
 wget https://github.com/TheAssassin/appimagecraft/releases/download/continuous/appimagecraft-x86_64.AppImage
 chmod +x appimagecraft-x86_64.AppImage
 DEPLOY_GTK_VERSION=4 ./appimagecraft-x86_64.AppImage
-cd ../..
+cd /
 
 echo "Installing File Manager."
-mkdir /app
+mkdir -p /app
 useradd -m -s /bin/bash -b /app fileman
 cp /sos/fileman/File_Manager-0-x86_64.AppImage /app/fileman
 chmod +x /app/launcher/File_Manager-0-x86_64.AppImage
@@ -104,10 +105,10 @@ echo "Packaging App Launcher as AppImage."
 cd /sos/launcher
 cp ../fileman/appimagecraft-x86_64.AppImage .
 DEPLOY_GTK_VERSION=4 ./appimagecraft-x86_64.AppImage
-cd ../..
+cd /
 
 echo "Installing App Launcher."
-mkdir /app
+mkdir -p /app
 useradd -m -s /bin/bash -b /app launcher
 cp /sos/launcher/App_Launcher-0-x86_64.AppImage /app/launcher
 chmod +x /app/launcher/App_Launcher-0-x86_64.AppImage
@@ -129,7 +130,7 @@ su -c "curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 su -c "git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions" ${3}
 su -c "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ${3}
 su -c "git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ${3}
-cd ../..
+cd /
 
 ## Set default zshrc to something simple, but nice
 rm -rf /home/${3}/.zshrc
@@ -170,7 +171,7 @@ cd lightdm-webkit2-theme-glorious
 chown sysman: .
 su -c "makepkg -Acs" sysman
 pacman --noconfirm -U *.pkg.tar.zst
-cd ../..
+cd /
 
 ## Set up lightdm
 echo "Setting up display manager."
@@ -205,11 +206,11 @@ mkdir -p /home/${3}/.config
 cp sos/xfce4.tar.xz /home/${3}/.config
 cd /home/${3}/.config/
 tar xfzv xfce4.tar.xz
+cd /
 cp sos/.gtkrc-2.0 /home/${3}
 mkdir -p /home/${3}/.config/gtk-3.0
 cp sos/.gtkrc-2.0 /home/${3}/.config/gtk-3.0/settings.ini
 chown -R ${3}: /home/${3}/.config
-cd ../../..
 rm -rf /app/sysman/.config/xfce4
 mkdir -p /app/sysman/.config
 cp -r /home/${3}/.config/xfce4 /app/sysman/.config
@@ -238,7 +239,7 @@ cat >> /usr/bin/run-app.sh<< EOF
 
 chmod 705 /home/\$USER
 chmod 605 /home/\$USER/.Xauthority
-sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost cp /home/$USER/.Xauthority /app/${1}/
+sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost cp /home/\$USER/.Xauthority /app/${1}/
 sshpass -p ${3} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${1}@localhost DISPLAY=:0.0 /app/${1}/${2}
 chmod 700 /home/\$USER
 chmod 600 /home/\$USER/.Xauthority

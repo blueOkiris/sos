@@ -33,6 +33,13 @@ To install:
 2. Run `chmod +x ./sos/install.sh`
 3. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
 
+The script will restart your machine.
+
+4. Sign in with your password
+5. Click your user name at the top right and select "Switch User"
+6. In the login screen, click the power button and select restart
+7. Sign in again and you'll be good to go!
+
 ## Building Custom Iso
 
 Dependencies:
