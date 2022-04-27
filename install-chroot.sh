@@ -122,7 +122,7 @@ su -c "curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 su -c "git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions" ${3}
 su -c "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ${3}
 su -c "git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ${3}
-cd ..
+cd ../..
 
 ## Set default zshrc to something simple, but nice
 rm -rf /home/${3}/.zshrc
@@ -193,11 +193,12 @@ EOF
 ### Set up DE Configs
 rm -rf /home/${3}/.config/xfce4
 mkdir -p /home/${3}/.config
-cp sos/xfce4-conf.tar.xz /home/${3}/.config
+cp sos/xfce4.tar.xz /home/${3}/.config
 cp sos/.gtkrc-2.0 /home/${3}/.config
 cd /home/${3}/.config/
-tar xfzv xfce4-conf.tar.xz
+tar xfzv xfce4.tar.xz
 chown -R ${3}: /home/${3}/.config
+cd ../../..
 rm -rf /app/sysman/.config/xfce4
 mkdir -p /app/sysman/.config
 cp -r /home/${3}/.config/xfce4 /app/sysman/.config
@@ -209,4 +210,4 @@ echo "Setting up network tools."
 pacman --noconfirm -S networkmanager network-manager-applet
 systemctl enable NetworkManager.service
 
-rm -rf sos
+rm -rf /sos
