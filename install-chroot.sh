@@ -11,7 +11,7 @@ echo "Updating."
 #pacman --noconfirm -S pacman-contrib
 #curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 
-## Update
+## Update and install pacman stuff
 #echo "Okay. Actually updating now!"
 pacman --noconfirm -Syu
 
@@ -49,23 +49,24 @@ initrd  /initramfs-linux.img
 options root="/dev/sda2" rw
 EOF
 
+# Install the other pacman stuff
+
+echo "Installing dependencies."
+pacman --noconfirm -S xfce4
+pacman --noconfirm -R xfce4
+pacman --noconfirm -S sudo gtk4 pkg-config fuse ibus cargo wget zsh git curl vim sshpass \
+    xorg xorg-xinit lightdm lightdm-webkit2-greeter \
+    xfwm4 xfce4-datetime-plugin xfce4-pulseaudio-plugin xfce4-fsguard-plugin xfce4-battery-plugin \
+    ttf-ubuntu-font-family papirus-icon-theme arc-gtk-theme networkmanager network-manager-applet
+
 # Set up users and rust apps
 
-## Install and set up sudo
-
-pacman --noconfirm -S sudo
+## Set up sudo
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /etc/sudoers
 
 ## Build rust project
 
 echo "Building sos project."
-
-### Install system dependencies for our project
-echo "Installing dependencies for Rust code."
-pacman --noconfirm -S gtk4 pkg-config fuse ibus
-
-### Install cargo
-pacman --noconfirm -S cargo
 
 ### Build rust project
 echo "Build start."
@@ -85,7 +86,6 @@ echo "sysman:${4}" | chpasswd
 ## Install appimage of fileman
 echo "Packaging File Manager as AppImage."
 cd /sos/fileman
-pacman --noconfirm -S wget
 wget https://github.com/TheAssassin/appimagecraft/releases/download/continuous/appimagecraft-x86_64.AppImage
 chmod +x appimagecraft-x86_64.AppImage
 DEPLOY_GTK_VERSION=4 ./appimagecraft-x86_64.AppImage
@@ -95,8 +95,8 @@ echo "Installing File Manager."
 mkdir -p /app
 useradd -m -s /bin/bash -b /app fileman
 cp /sos/fileman/File_Manager-0-x86_64.AppImage /app/fileman
-chmod +x /app/launcher/File_Manager-0-x86_64.AppImage
-chown fileman: /app/launcher/File_Manager-0-x86_64.AppImage
+chmod +x /app/fileman/File_Manager-0-x86_64.AppImage
+chown fileman: /app/fileman/File_Manager-0-x86_64.AppImage
 echo "File Manager,0,fileman,/app/fileman,File_Manager-0-x86_64.AppImage" >> /app/index
 echo "fileman:appuser" | chpasswd
 
@@ -118,13 +118,11 @@ echo "launcher:appuser" | chpasswd
 
 ## Creating user (No root access FYI)
 echo "Creating user ${3}."
-pacman --noconfirm -S zsh
 useradd -m -s /bin/zsh -b /home ${3}
 echo "${3}:${4}" | chpasswd
 
 ## Set up oh-my-zsh
 echo "Setting up zsh."
-pacman --noconfirm -S git curl
 cd /home/${3}
 su -c "curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh" ${3}
 su -c "git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions" ${3}
@@ -149,22 +147,13 @@ source \$ZSH/oh-my-zsh.sh
 export PATH="/home/${3}/.local/bin:\$PATH"
 export EDITOR=vim
 EOF
-pacman --noconfirm -S vim
 chown ${3}: /home/${3}/.zshrc
 
 # Desktop setup
 
 echo "Setting up desktop environment."
 
-## Install xfwm4, xfce4-panel, etc (stuff that's not this project)
-pacman --noconfirm -S xorg xorg-xinit xfce4 lightdm lightdm-webkit2-greeter
-### Install and uninstall xfce4 so all the config for a DE gets set up.
-### Seems to be the easiest way
-pacman --noconfirm -R xfce4
-### Then install the xfce4 stuff we're using
-pacman --noconfirm -S xfce4-panel xfce4-terminal \
-    xfwm4 xfce4-datetime-plugin xfce4-pulseaudio-plugin xfce4-fsguard-plugin xfce4-battery-plugin \
-    ttf-ubuntu-font-family papirus-icon-theme arc-gtk-theme
+## Install gtk them
 cd sos
 git clone https://aur.archlinux.org/lightdm-webkit2-theme-glorious.git
 cd lightdm-webkit2-theme-glorious
@@ -201,6 +190,7 @@ DesktopNames=SimpleOS_DE
 EOF
 
 ### Set up DE Configs
+echo "Configuring desktop experience."
 rm -rf /home/${3}/.config/xfce4
 mkdir -p /home/${3}/.config
 cp sos/xfce4.tar.xz /home/${3}/.config
@@ -221,12 +211,10 @@ chown -R sysman: /app/sysman/.config
 
 ## Install network stuff
 echo "Setting up network tools."
-pacman --noconfirm -S networkmanager network-manager-applet
 systemctl enable NetworkManager.service
 
 ## Enable ssh for running programs
 echo "Setting up interapp ssh."
-pacman --noconfirm -S sshpass
 systemctl enable sshd.service
 
 ## Installing an application runner
