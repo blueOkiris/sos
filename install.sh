@@ -41,6 +41,6 @@ cp -r sos /mnt/
 # Run secondary install script
 ## Second parameter is timezone, 3rd is root password, fourth is user name, fifth is user passsword
 arch-chroot /mnt chmod +x ./sos/install-chroot.sh
-arch-chroot /mnt ./sos/install-chroot.sh ${2} ${3} ${4} ${5}
+arch-chroot /mnt bash -x /sos/install-chroot.sh ${2} ${3} ${4} ${5} ${1}
 
 reboot

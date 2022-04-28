@@ -18,27 +18,41 @@ __Getting the Installer:__
 
 You can grab an iso from Releases or make it yourself (below).
 
-Here you can learn how to burn and boot a live iso
+You need to [burn it to a USB drive](https://www.balena.io/etcher/), then [change your bios to boot to USB](https://recoverit.wondershare.com/windows-pe/how-to-set-computer-to-boot-from-usb-drive.html), and then boot into it.
 
 __Selecting a Drive:__
 
-After you boot into the live iso, you'll need to select the disk you want to install to. Most likely if you have hard drives, it will be /dev/sda. If you have an nvme ssd then it will be /dev/nvme0n1. If installing to an SD Card it will probably be under /dev/mmcblk0.
+After you boot into the live iso, you'll need to select the disk you want to install to. Most likely:
+- if you have hard drives, it will be /dev/sda
+- if you have an nvme ssd then it will be /dev/nvme0n1
+- if installing to an SD Card it will probably be under /dev/mmcblk0
+- if using gnome-boxes it'll be /dev/vda
 
-To see what disks you have run the command `lsblk`
+To see what disks you have run the command `lsblk`. Ignore things like "loop0."
+
+Warning: As it currently stands, it is not possible to set up manual partitions and the OS will install to use the entire disk. Either install over your existing OS, use a second hard drive, or use a USB stick/SD card (not the one you used for the iso)
 
 __Running the Installer__
 
 To install:
-1. Connect to the internet [like you would with an Arch Iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
-2. Run `chmod +x ./sos/install.sh`
-3. Run `./sos/install.sh <hard drive you want to install to> <region/timezone (from /usr/share/zoneinfo/region/timezone> <admin password> <username> <your password>` e.g. `./sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
+1. Connect to the internet [like you would with a standard Arch Linux iso](https://wiki.archlinux.org/title/Network_configuration/Wireless#iw)
+2. Run `chmod +x sos/install.sh`
+3. Run `bash -x sos/install.sh drive timezone root-password username password` where:
+    - "drive" should be replaced with the drive you selected
+    - "timezone" is one of the "Region/Timezone" pairs in [this list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
+    - "root-password" is your administrative password. You will likely not use this much, so make it secure, write it down somewhere and forget about it
+    - "username" is your user name for logging into the OS
+    - "password" is the password for loging in with your user name
+    - Example: `bash -x sos/install.sh /dev/sda US/Central secure_password blueOkiris password`
 
-The script will restart your machine.
+The script will restart your machine. Remove the installation media before it boots into it.
+
+Unfortunately, the theme does not get set properly after install, so do these steps next:
 
 4. Sign in with your password
 5. Click your user name at the top right and select "Switch User"
-6. In the login screen, click the power button and select restart
-7. Sign in again and you'll be good to go!
+6. Back in the login screen, click the power button and select restart
+7. Sign in one more time, and you'll be good to go!
 
 ## Building Custom Iso
 

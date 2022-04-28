@@ -46,7 +46,7 @@ cat >> /boot/loader/entries/arch.conf<< EOF
 title   Simple OS
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root="/dev/sda2" rw
+options root="${5}2" rw
 EOF
 
 # Install the other pacman stuff
@@ -55,9 +55,9 @@ echo "Installing dependencies."
 pacman --noconfirm -S xfce4
 pacman --noconfirm -R xfce4
 pacman --noconfirm -S sudo gtk4 pkg-config fuse ibus cargo wget zsh git curl vim sshpass \
-    xorg xorg-xinit lightdm lightdm-webkit2-greeter \
+    xorg xorg-xinit lightdm lightdm-webkit2-greeter tlp \
     xfwm4 xfce4-datetime-plugin xfce4-pulseaudio-plugin xfce4-fsguard-plugin xfce4-battery-plugin \
-    ttf-ubuntu-font-family papirus-icon-theme arc-gtk-theme networkmanager network-manager-applet
+    ttf-ubuntu-font-family papirus-icon-theme arc-gtk-theme networkmanager network-manager-applet blueberry
 
 # Set up users and rust apps
 
@@ -149,6 +149,12 @@ export EDITOR=vim
 EOF
 chown ${3}: /home/${3}/.zshrc
 
+## Set up permisions for default apps and user
+groupadd appcfg
+chown -R :appcfg /app
+usermod -aG appcfg ${3}
+chmod -R g+rw /app
+
 # Desktop setup
 
 echo "Setting up desktop environment."
@@ -191,23 +197,22 @@ EOF
 
 ### Set up DE Configs
 echo "Configuring desktop experience."
-rm -rf /home/${3}/.config/xfce4
-mkdir -p /home/${3}/.config
-cp sos/xfce4.tar.xz /home/${3}/.config
-cd /home/${3}/.config/
-tar xfzv xfce4.tar.xz
+rm -rf /home/${3}/.gtkrc-2.0
+rm -rf /home/${3}/.icons
+rm -rf /home/${3}/.config
+cp sos/desk-cfg.tar.gz /home/${3}
+cd /home/${3}
+tar xfzv desk-cfg.tar.gz
 cd /
-cp sos/.gtkrc-2.0 /home/${3}
-mkdir -p /home/${3}/.config/gtk-3.0
-cp sos/.gtkrc-2.0 /home/${3}/.config/gtk-3.0/settings.ini
-chown -R ${3}: /home/${3}/.config
-rm -rf /app/sysman/.config/xfce4
-mkdir -p /app/sysman/.config
-cp -r /home/${3}/.config/xfce4 /app/sysman/.config
-cp sos/.gtkrc-2.0 /app/sysman/
-mkdir -p /app/sysman/.config/gtk-3.0
-cp sos/.gtkrc-2.0 /app/sysman/.config/gtk-3.0/settings.ini
-chown -R sysman: /app/sysman/.config
+chown -R ${3}: /home/${3}
+rm -rf /app/sysman/.gtkrc-2.0
+rm -rf /app/sysman/.icons
+rm -rf /app/sysman/.config
+cp sos/desk-cfg.tar.gz /app/sysman
+cd /app/sysman
+tar xfzv desk-cfg.tar.gz
+cd /
+chown -R sysman: /app/sysman
 
 ## Install network stuff
 echo "Setting up network tools."
@@ -216,6 +221,12 @@ systemctl enable NetworkManager.service
 ## Enable ssh for running programs
 echo "Setting up interapp ssh."
 systemctl enable sshd.service
+
+## Enable better power management
+systemctl enable tlp.service
+
+## Enable bluetooth
+systemctl enable bluetooth.service
 
 ## Installing an application runner
 cat >> /usr/bin/run-app.sh<< EOF
